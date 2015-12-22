@@ -18,7 +18,7 @@ locale-gen en_US.UTF-8
 
 apt-get install -y software-properties-common curl
 
-apt-add-repository ppa:nginx/stable -y
+apt-add-repository ppa:nginx/development -y
 apt-add-repository ppa:rwky/redis -y
 apt-add-repository ppa:ondrej/php-7.0 -y
 
@@ -55,7 +55,7 @@ ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 apt-get install -y --force-yes php7.0-cli php7.0-dev \
 php-pgsql php-sqlite3 php-gd \
 php-curl php7.0-dev \
-php-imap php-mysql
+php-imap php-mysql php-memcached php7.0-readline
 
 # Install Composer
 
@@ -185,9 +185,14 @@ debconf-set-selections <<< "mysql-community-server mysql-community-server/root-p
 debconf-set-selections <<< "mysql-community-server mysql-community-server/re-root-pass password secret"
 apt-get install -y mysql-server
 
+# Configure MySQL Password Lifetime
+
+echo "default_password_lifetime = 0" >> /etc/mysql/my.cnf
+
 # Configure MySQL Remote Access
 
 sed -i '/^bind-address/s/bind-address.*=.*/bind-address = 0.0.0.0/' /etc/mysql/my.cnf
+
 mysql --user="root" --password="secret" -e "GRANT ALL ON *.* TO root@'0.0.0.0' IDENTIFIED BY 'secret' WITH GRANT OPTION;"
 service mysql restart
 
