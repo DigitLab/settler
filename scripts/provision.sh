@@ -34,6 +34,9 @@ echo "deb http://packages.blackfire.io/debian any main" | tee /etc/apt/sources.l
 
 curl --silent --location https://deb.nodesource.com/setup_5.x | bash -
 
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+
 # Update Package Lists
 
 apt-get update
@@ -84,6 +87,14 @@ apt-get install -y --force-yes nginx php7.0-fpm
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 service nginx restart
+
+# Install MongoDB
+
+sudo apt-get install -y mongodb-org
+
+sed -i 's/  bindIp:.*/  bindIp: 0.0.0.0/' /etc/mongod.conf
+service mongod restart
+
 
 # Add The HHVM Key & Repository
 

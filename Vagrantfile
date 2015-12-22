@@ -2,7 +2,7 @@ VAGRANTFILE_API_VERSION = '2'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure The Box
-  config.vm.box = 'bento/ubuntu-14.04'
+  config.vm.box = 'parallels/ubuntu-14.04'
   config.vm.hostname = 'homestead'
 
   # Don't Replace The Default Key https://github.com/mitchellh/vagrant/pull/4707
@@ -30,7 +30,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Run The Base Provisioning Script
   config.vm.provision 'shell', path: './scripts/update.sh'
   config.vm.provision :reload
-  config.vm.provision 'shell', path: './scripts/vmware_tools.sh'
-  config.vm.provision :reload
+  #config.vm.provision 'shell', path: './scripts/vmware_tools.sh'
+  #config.vm.provision :reload
   config.vm.provision 'shell', path: './scripts/provision.sh'
 end
