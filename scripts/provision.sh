@@ -19,8 +19,8 @@ locale-gen en_US.UTF-8
 apt-get install -y software-properties-common curl
 
 apt-add-repository ppa:nginx/development -y
-apt-add-repository ppa:rwky/redis -y
-apt-add-repository ppa:ondrej/php-7.0 -y
+apt-add-repository ppa:chris-lea/redis-server -y
+apt-add-repository ppa:ondrej/php -y
 
 # gpg: key 5072E1F5: public key "MySQL Release Engineering <mysql-build@oss.oracle.com>" imported
 apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 5072E1F5
@@ -54,8 +54,9 @@ ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
 apt-get install -y --force-yes php7.0-cli php7.0-dev \
 php-pgsql php-sqlite3 php-gd php-apcu \
-php-curl php7.0-dev \
-php-imap php-mysql php-memcached php7.0-readline \
+php-curl php7.0-mcrypt \
+php-imap php-mysql php-memcached php7.0-readline php-xdebug \
+php-mbstring php-xml php7.0-zip
 php-mongodb
 
 # Install Composer
